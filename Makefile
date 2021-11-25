@@ -12,10 +12,10 @@ endif
 
 all: komp.app
 
-%.app: leksik.yy.c leksik.tab.c
+%.app: %.yy.c %.tab.c
 	$(CC) -o $*.$(EXT) $? -fcommon
 
-%.yy.c: %.l
+%.yy.c: leksik.l
 	$(LEX) -o $@ $<
 
 %.tab.c: sintaks.y

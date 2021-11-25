@@ -7,6 +7,10 @@ FILE *yyin;
 
 int linionum = 1;
 
+double MIN_NUM = -2147483648.0;
+double MAKS_NUM = 2147483647.0;
+int MAKS_S = 30;
+
 int yyerror(char *);
 %}
 
@@ -27,10 +31,10 @@ punkto "."
 punktokom ";"
 
 op_sum "+"
-op_mult ("*"|"×"|"·")
+op_mul ("*"|"×"|"·")
 op_asig ("<-"|":=")
 
-valida_signo ({litero}|{cifero}|" ")
+valida_signo ({litero}|{cifero}|" "|[¿?¡!])
 
 malferma_komento "/*"
 ferma_komento "*/"
@@ -40,7 +44,7 @@ komento {malferma_komento}{valida_signo}*{ferma_komento}
 id {litero}(_?({litero}|{cifero}))*
 
 nk {malpli}?({cifero}+({punkto}{cifero}*)?|{cifero}*{punkto}{cifero}+)
-sk {citilo}{litero}*{citilo}
+sk {citilo}{valida_signo}*{citilo}
 
 malferma_krampo "("
 ferma_krampo ")"
@@ -60,8 +64,8 @@ ferma_krampo ")"
 {op_sum} {
   return op_sum;
 }
-{op_mult} {
-  return op_mult;
+{op_mul} {
+  return op_mul;
 }
 
 {op_asig} {

@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 #define KOLOR_RUGA "\033[1;31m"
-#define COLOR_REKOMENCIGITA "\033[0m"
+#define KOLOR_REKOMENCIGITA "\033[0m"
 
 #define DOSIERNOM "prog"
 
@@ -26,8 +26,31 @@ int yyerror(char *);
   char *s_val;
 }
 
+%token punktokom
+
+%token id
+%token <num_val> nk
+%token <s_val> sk
+
+%token op_asig
+%token op_sum op_mul
+
+%token malferma_krampo ferma_krampo
+
 %%
 P: KOD;
+
+KOD: KOD L | L;
+
+L: A punktokom;
+
+A: id op_asig E | id op_asig A;
+
+E: E op_sum T | T;
+
+T: T op_mul F | F;
+
+F: id | nk | sk | malferma_krampo E ferma_krampo;
 %%
 
 int main(int argc, char *argv[]) {

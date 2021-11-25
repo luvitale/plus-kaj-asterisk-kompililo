@@ -6,12 +6,10 @@ KOD -> KOD L | L
 
 L -> A punktokom
 
-A -> id op_asig ESPRIM | id op_asig A
+A -> id op_asig E | id op_asig A
 
-E -> E op_sum T
+E -> E op_sum T | T
 
-T -> T op_mult F
+T -> T op_mul F | F
 
-F -> id | K | malferma_krampo E ferma_krampo
-
-K -> nk | sk
+F -> id | nk | sk | malferma_krampo E ferma_krampo
