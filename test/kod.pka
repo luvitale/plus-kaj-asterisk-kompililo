@@ -6,4 +6,8 @@ saluton_mondo <- saluton + "Mondo!";
 
 saluton_nomo <- saluton + " " + nom + "!";
 
-proks_pi <- 3 + .14;
+unu <- 1;
+
+tri <- 3 * unu;
+
+proks_pi <- tri + (.07 * 2);
