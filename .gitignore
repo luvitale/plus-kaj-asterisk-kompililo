@@ -1,0 +1,8 @@
+.vscode
+
+*.app
+*.exe
+*.tab.*
+*.yy.*
+*.output
+*.mkg
