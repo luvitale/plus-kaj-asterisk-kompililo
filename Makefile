@@ -26,7 +26,7 @@ endif
 ifeq ($(OS),Windows_NT)
 	EXT=exe
 else
-	PATH=./
+	PATHR=./
 	EXT=app
 endif
 
@@ -44,7 +44,7 @@ all: komp.app
 	$(BISON) -o $@ -dyv $<
 
 test-%: %.app
-	$(PATH)$*.$(EXT) $(PATH)test/kod.pka
+	$(PATHR)$*.$(EXT) $(PATHR)test/kod.pka
 	@if test -n "$(DOT)"; then\
 		echo "dot found";\
 	else\
