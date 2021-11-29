@@ -37,7 +37,7 @@ jobs:
 
       - name: Instali graphviz
         run: apt install -y graphviz
-        if: startsWith(matrix.os, 'windows')
+        if: startsWith(matrix.os, 'ubuntu')
 
       - name: Instali graphviz
         run: brew install graphviz
