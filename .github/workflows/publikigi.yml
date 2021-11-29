@@ -40,7 +40,7 @@ jobs:
         if: startsWith(matrix.os, 'windows')
 
       - name: Instali graphviz
-        run: port install -N graphviz
+        run: brew install graphviz
         if: startsWith(matrix.os, 'macos')
 
       - uses: actions/checkout@v2
