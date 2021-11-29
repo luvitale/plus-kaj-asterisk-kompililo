@@ -26,7 +26,6 @@ endif
 ifeq ($(OS),Windows_NT)
 	EXT=exe
 else
-	PATHR=./
 	EXT=app
 endif
 
@@ -44,19 +43,7 @@ all: komp.app
 	$(BISON) -o $@ -dyv $<
 
 test-%: %.app
-	$(PATHR)$*.$(EXT) $(PATHR)test/kod.pka
-	@if test -n "$(DOT)"; then\
-		echo "dot found";\
-	else\
-		echo "dot not found";\
-		echo "success";\
-		exit 0;\
-	fi
-	@for i in *.dot; do\
-		echo "generating $$i.png";\
-		$(DOT) -Tpng $$i -o $$i.png;\
-		echo "success";\
-	done
+	$*.$(EXT) test/kod.pka
 
 test: test-komp
 
