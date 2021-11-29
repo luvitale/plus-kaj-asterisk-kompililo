@@ -43,7 +43,7 @@ all: komp.app
 	$(BISON) -o $@ -dyv $<
 
 test-%: %.app
-	$*.$(EXT) test/kod.pka
+	./$*.$(EXT) ./test/kod.pka
 
 test: test-komp
 
