@@ -26,6 +26,7 @@ endif
 ifeq ($(OS),Windows_NT)
 	EXT=exe
 else
+	PATH=./
 	EXT=app
 endif
 
@@ -34,16 +35,16 @@ DOT := $(shell which dot)
 all: komp.app
 
 %.app: %.yy.c %.tab.c tree.c rpn.c tac.c stack.c
-	$(CC) -o ./$*.$(EXT) $? -fcommon
+	$(CC) -o $*.$(EXT) $? -fcommon
 
 %.yy.c: leksik.l
-	$(LEX) -o ./$@ $<
+	$(LEX) -o $@ $<
 
 %.tab.c: sintaks.y
-	$(BISON) -o ./$@ -dyv $<
+	$(BISON) -o $@ -dyv $<
 
 test-%: %.app
-	./$*.$(EXT) ./test/kod.pka
+	$(PATH)$*.$(EXT) $(PATH)test/kod.pka
 	@if test -n "$(DOT)"; then\
 		echo "dot found";\
 	else\
