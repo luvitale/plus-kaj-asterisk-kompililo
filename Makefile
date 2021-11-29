@@ -1,14 +1,35 @@
 CC=gcc
 
+# check if flex exists
+LEX := $(shell which flex)
+ifndef LEX
+	# if not, try to find it in the path
+	LEX := $(shell which win_flex)
+	ifndef LEX
+		# error
+		echo "flex not found"
+		exit 1
+	endif
+endif
+
+BISON := $(shell which bison)
+ifndef BISON
+	# if not, try to find it in the path
+	BISON := $(shell which win_bison)
+	ifndef BISON
+		# error
+		echo "bison not found"
+		exit 1
+	endif
+endif
+
 ifeq ($(OS),Windows_NT)
-	LEX=win_flex
-	BISON=win_bison
 	EXT=exe
 else
-	LEX=flex
-	BISON=bison
 	EXT=app
 endif
+
+DOT := $(shell which dot)
 
 all: komp.app
 
@@ -23,6 +44,18 @@ all: komp.app
 
 test-%: %.app
 	./$*.$(EXT) ./test/kod.pka
+	@if test -n "$(DOT)"; then\
+		echo "dot found";\
+	else\
+		echo "dot not found";\
+		echo "success";\
+		exit 0;\
+	fi
+	@for i in *.dot; do\
+		echo "generating $$i.png";\
+		$(DOT) -Tpng $$i -o $$i.png;\
+		echo "success";\
+	done
 
 test: test-komp
 

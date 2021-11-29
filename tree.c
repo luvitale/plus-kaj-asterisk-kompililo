@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #define EXTENSION "tree.mkg"
+#define DOT_EXTENSION "tree.dot"
 
 // create leaf
 tree_node_t *create_leaf(char *value)
@@ -103,4 +104,36 @@ void postorder(tree_node_t *root)
     postorder(root->right);
     printf("%s ", root->info);
   }
+}
+
+void print_digraph_tree(int father_num, tree_node_t *father, int child_num, tree_node_t *child, FILE *fp)
+{
+  if (child != NULL)
+  {
+    fprintf(fp, "\tx%d [label=<%s>];\n", child_num, child->info);
+    if (father != NULL)
+    {
+      fprintf(fp, "\tx%d -> x%d;\n", father_num, child_num);
+    }
+    print_digraph_tree(child_num, child, 2 * child_num + 1, child->left, fp);
+    print_digraph_tree(child_num, child, 2 * child_num + 2, child->right, fp);
+  }
+}
+
+void save_bst_digraph(tree_node_t *p, char *filename)
+{
+  FILE *fp;
+  char file[100];
+  sprintf(file, "%s.%s", filename, DOT_EXTENSION);
+  fp = fopen(file, "w+");
+  if (!fp)
+  {
+    printf("Cannot open file.\n");
+    return;
+  }
+  fprintf(fp, "digraph BST {\n");
+  if (p)
+    print_digraph_tree(-1, NULL, 0, &(*p), fp);
+  fprintf(fp, "}");
+  fclose(fp);
 }

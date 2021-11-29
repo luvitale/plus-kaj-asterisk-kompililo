@@ -118,7 +118,7 @@ A: id op_asig E {
 
   // Arbo
   a_id_montril = create_leaf(strdup($1));
-  a_montril = create_node(strdup("<-"), a_id_montril, e_montril);
+  a_montril = create_node(strdup(":="), a_id_montril, e_montril);
 
   puts(regul[4]);
 } | id op_asig A {
@@ -132,7 +132,7 @@ A: id op_asig E {
 
   // Arbo
   a_id_montril = create_leaf(strdup($1));
-  a_montril = create_node(strdup("<-"), a_id_montril, a_montril);
+  a_montril = create_node(strdup(":="), a_id_montril, a_montril);
 
   puts(regul[5]);
 };
@@ -238,7 +238,7 @@ int main(int argc, char *argv[]) {
 
   yyparse();
 
-  save_postorder_in_file(arbo, DOSIERNOM); // Arbo
+  save_bst_digraph(arbo, DOSIERNOM); // Arbo
   save_rpn_in_file(ipn, DOSIERNOM);
 
   fclose(yyin);
