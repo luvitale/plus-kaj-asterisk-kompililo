@@ -238,7 +238,6 @@ int main(int argc, char *argv[]) {
 
   yyparse();
 
-  save_bst_digraph(arbo, DOSIERNOM); // Arbo
   save_rpn_in_file(ipn, DOSIERNOM);
 
   fclose(yyin);

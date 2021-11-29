@@ -1,13 +1,13 @@
 #ifndef STACK_H
 #define STACK_H
 
-typedef unsigned char byte;
+typedef unsigned char byte_elem_t;
 
 // stack structure
 typedef struct Stack
 {
   int top;
-  byte *storage;
+  byte_elem_t *storage;
   int elemSize;
   int maxElements;
 } stack_str_t;

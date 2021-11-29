@@ -106,6 +106,7 @@ void postorder(tree_node_t *root)
   }
 }
 
+/*
 void print_digraph_tree(int father_num, tree_node_t *father, int child_num, tree_node_t *child, FILE *fp)
 {
   if (child != NULL)
@@ -137,3 +138,4 @@ void save_bst_digraph(tree_node_t *p, char *filename)
   fprintf(fp, "}");
   fclose(fp);
 }
+*/

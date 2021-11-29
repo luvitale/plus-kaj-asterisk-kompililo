@@ -20,6 +20,8 @@ tree_node_t *create_node(char *, tree_node_t *, tree_node_t *);
 void save_inorder_in_file(tree_node_t *, char *);
 void save_postorder_in_file(tree_node_t *, char *);
 void postorder(tree_node_t *);
+/*
 void save_bst_digraph(tree_node_t *, char *);
+*/
 
 #endif // TREE_H_INCLUDED

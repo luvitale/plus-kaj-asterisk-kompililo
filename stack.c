@@ -5,10 +5,10 @@
 
 void create_stack(stack_str_t *s, int elemSize)
 {
-  byte *storage;
+  byte_elem_t *storage;
 
   /* Try to allocate memory */
-  storage = (byte *)malloc(elemSize * INITIAL_CAPACITY);
+  storage = (byte_elem_t *)malloc(elemSize * INITIAL_CAPACITY);
   if (storage == NULL)
   {
     fprintf(stderr, "Insufficient memory to initialize stack.\n");
@@ -42,7 +42,7 @@ void push_to_stack(stack_str_t *s, void *elem)
   if (stack_is_full(s))
   {
     s->maxElements *= 2;
-    s->storage = (byte *)realloc(s->storage, s->elemSize * s->maxElements);
+    s->storage = (byte_elem_t *)realloc(s->storage, s->elemSize * s->maxElements);
     if (s->storage == NULL)
     {
       fprintf(stderr, "Insufficient memory to push element to stack.\n");
@@ -52,7 +52,7 @@ void push_to_stack(stack_str_t *s, void *elem)
   int start = s->top * s->elemSize, i;
   for (i = 0; i < s->elemSize; i++)
   {
-    *(s->storage + start + i) = *((byte *)(elem + i));
+    *(s->storage + start + i) = *((byte_elem_t *)(elem + i));
   }
   s->top = s->top + 1;
 }
@@ -77,8 +77,8 @@ void *top_from_stack(stack_str_t *s)
     exit(1);
   }
   int start = (s->top - 1) * s->elemSize, i;
-  byte *elem;
-  elem = (byte *)malloc(s->elemSize);
+  byte_elem_t *elem;
+  elem = (byte_elem_t *)malloc(s->elemSize);
   for (i = 0; i < s->elemSize; i++)
   {
     *(elem + i) = *(s->storage + start + i);
