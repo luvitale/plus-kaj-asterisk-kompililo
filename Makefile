@@ -24,7 +24,7 @@ ifndef BISON
 endif
 
 ifeq ($(OS),Windows_NT)
-	FLEX=win_flex
+	LEX=win_flex
 	BISON=win_bison
 	EXT=exe
 else
