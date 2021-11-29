@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define EXTENSION "tree.icg"
+#define EXTENSION "tree.mkg"
 
 // create leaf
 tree_node_t *create_leaf(char *value)

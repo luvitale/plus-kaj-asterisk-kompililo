@@ -19,5 +19,6 @@ int get_last_cell_of_rpn(rpn_t *);
 void free_rpn(rpn_t *);
 void save_rpn_in_file(rpn_t *, char *);
 void show_rpn(rpn_t *);
+void rpn_assembly(rpn_t *, char *);
 
 #endif // RPN_H

@@ -1,1 +1,0 @@
-saluton "Saluton" <- nom "Satoshi" <- ; saluton_mondo saluton "Mondo!" + <- ; saluton_nomo saluton " " + nom + "!" + <- ; unu 1.000000 <- ; tri 3.000000 unu * <- ; proks_pi 0.070000 2.000000 * 2.000000 + <- ; 

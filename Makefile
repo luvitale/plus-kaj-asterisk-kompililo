@@ -12,7 +12,7 @@ endif
 
 all: komp.app
 
-%.app: %.yy.c %.tab.c tree.c rpn.c tac.c
+%.app: %.yy.c %.tab.c tree.c rpn.c tac.c stack.c
 	$(CC) -o $*.$(EXT) $? -fcommon
 
 %.yy.c: leksik.l

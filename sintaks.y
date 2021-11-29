@@ -82,6 +82,9 @@ P: KOD {
   // Arbo
   arbo = kod_montril;
 
+  // Asembleo
+  rpn_assembly(ipn, DOSIERNOM);
+
   puts(regul[0]);
 };
 

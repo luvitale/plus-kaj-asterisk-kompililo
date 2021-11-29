@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define EXTENSION "tac.icg"
+#define EXTENSION "tac.mkg"
 
 int num = 0;
 
