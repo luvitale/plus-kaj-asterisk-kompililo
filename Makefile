@@ -44,13 +44,6 @@ all: komp.app
 
 test-%: %.app
 	./$*.$(EXT) ./test/kod.pka
-	@if test -n "$(DOT)"; then\
-		echo "dot found";\
-	else\
-		echo "dot not found";\
-		echo "success";\
-		exit 0;\
-	fi
 	@for i in *.dot; do\
 		echo "generating $$i.png";\
 		$(DOT) -Tpng $$i -o $$i.png;\

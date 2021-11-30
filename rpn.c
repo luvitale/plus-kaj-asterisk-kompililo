@@ -98,8 +98,10 @@ void show_rpn(rpn_t *rpn)
 
 void rpn_assembly(rpn_t *rpn, char *filename)
 {
-  stack_str_t *l_stack;
-  create_stack(l_stack, sizeof(char) * 100);
+  stack_structure_t l_stack;
+  create_stack(&l_stack, 100);
+
+  printf("RPN assembly\n");
 
   char file[100];
   sprintf(file, "%s.tmp.%s", filename, ASM_EXTENSION);
@@ -110,6 +112,8 @@ void rpn_assembly(rpn_t *rpn, char *filename)
   char op2[100];
   char result[100];
 
+  printf("RPN assembly\n");
+
   int last_cell = get_last_cell_from_rpn(rpn);
 
   for (int i = 1; i <= last_cell; ++i)
@@ -118,8 +122,10 @@ void rpn_assembly(rpn_t *rpn, char *filename)
 
     if (strcmp(value, "<-") == 0)
     {
-      strcpy(op1, (char *)pop_from_stack(l_stack));
-      strcpy(op2, (char *)pop_from_stack(l_stack));
+      pop_from_stack(&l_stack, op1);
+      pop_from_stack(&l_stack, op2);
+
+      printf("%s %s %s\n", op2, value, op1);
 
       fprintf(
           fp,
@@ -129,8 +135,10 @@ void rpn_assembly(rpn_t *rpn, char *filename)
     }
     else if (strcmp(value, "+") == 0)
     {
-      strcpy(op2, (char *)pop_from_stack(l_stack));
-      strcpy(op1, (char *)pop_from_stack(l_stack));
+      pop_from_stack(&l_stack, op2);
+      pop_from_stack(&l_stack, op1);
+      
+      printf("%s %s %s\n", op2, value, op1);
 
       fprintf(
           fp,
@@ -157,12 +165,14 @@ void rpn_assembly(rpn_t *rpn, char *filename)
           fp,
           "FFREE\n");
 
-      push_to_stack(l_stack, result);
+      push_to_stack(&l_stack, result);
     }
     else if (strcmp(value, "*") == 0)
     {
-      strcpy(op2, (char *)pop_from_stack(l_stack));
-      strcpy(op1, (char *)pop_from_stack(l_stack));
+      pop_from_stack(&l_stack, op2);
+      pop_from_stack(&l_stack, op1);
+
+      printf("%s %s %s\n", op2, value, op1);
 
       fprintf(
           fp,
@@ -189,12 +199,15 @@ void rpn_assembly(rpn_t *rpn, char *filename)
           fp,
           "FFREE\n");
 
-      push_to_stack(l_stack, result);
+      push_to_stack(&l_stack, result);
     }
     // id || cte
     else
     {
-      push_to_stack(l_stack, value);
+      printf("%s\n", value);
+      push_to_stack(&l_stack, value);
     }
   }
+
+  fclose(fp);
 }

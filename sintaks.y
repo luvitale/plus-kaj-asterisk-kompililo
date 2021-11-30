@@ -83,6 +83,7 @@ P: KOD {
   arbo = kod_montril;
 
   // Asembleo
+  printf("%s\n", DOSIERNOM);
   rpn_assembly(ipn, DOSIERNOM);
 
   puts(regul[0]);

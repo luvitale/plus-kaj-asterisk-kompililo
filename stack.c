@@ -1,93 +1,81 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "stack.h"
-#define INITIAL_CAPACITY 10
+#include <stdlib.h>
+#include <string.h>
 
-void create_stack(stack_str_t *s, int elemSize)
-{
-  byte *storage;
-
-  /* Try to allocate memory */
-  storage = (byte *)malloc(elemSize * INITIAL_CAPACITY);
-  if (storage == NULL)
-  {
-    fprintf(stderr, "Insufficient memory to initialize stack.\n");
-    exit(1);
-  }
-
-  /* Initialize an empty stack */
-  s->top = 0;
-  s->maxElements = INITIAL_CAPACITY;
-  s->elemSize = elemSize;
-  s->storage = storage;
+/**
+ * @brief Create stack
+ * 
+ */
+void create_stack(stack_structure_t *s, int elem_size) {
+    s->node = NULL;
+    s->elem_size = elem_size;
 }
 
-int stack_is_full(stack_str_t *s)
-{
-  return s->top == s->maxElements;
+/**
+ * @brief Check if stack is empty
+ * 
+ * @return int 
+ */
+int stack_is_empty(stack_structure_t *s) {
+    return s->node == NULL;
 }
 
-int stack_is_empty(stack_str_t *s)
-{
-  return s->top == 0;
-}
-
-int stack_size(stack_str_t *s)
-{
-  return s->top;
-}
-
-void push_to_stack(stack_str_t *s, void *elem)
-{
-  if (stack_is_full(s))
-  {
-    s->maxElements *= 2;
-    s->storage = (byte *)realloc(s->storage, s->elemSize * s->maxElements);
-    if (s->storage == NULL)
-    {
-      fprintf(stderr, "Insufficient memory to push element to stack.\n");
-      exit(1);
+/**
+ * @brief Push element to stack
+ * 
+ */
+void push_to_stack(stack_structure_t *s, void *value) {
+    stack_node_t *new_node = (stack_node_t*) malloc(sizeof(stack_node_t));
+    if (!new_node) {
+        fprintf(stderr, "Insufficient memory to push element to stack.\n");
+        exit(EXIT_FAILURE);
     }
-  }
-  int start = s->top * s->elemSize, i;
-  for (i = 0; i < s->elemSize; i++)
-  {
-    *(s->storage + start + i) = *((byte *)(elem + i));
-  }
-  s->top = s->top + 1;
+    new_node->next = s->node;
+    new_node->value = (byte*) malloc(s->elem_size);
+    if (!new_node->value) {
+        fprintf(stderr, "Insufficient memory to push element to stack.\n");
+        exit(EXIT_FAILURE);
+    }
+    memcpy(new_node->value, value, s->elem_size);
+    s->node = new_node;
 }
 
-void *pop_from_stack(stack_str_t *s)
-{
-  if (stack_is_empty(s))
-  {
-    fprintf(stderr, "Can not pop from an empty stack.\n");
-    exit(1);
-  }
-  void *elem = top_from_stack(s);
-  s->top = s->top - 1;
-  return elem;
+/**
+ * @brief Pop element from stack
+ * 
+ */
+void pop_from_stack(stack_structure_t *s, void *value) {
+    if (stack_is_empty(s)) {
+        fprintf(stderr, "Stack is empty.\n");
+        exit(EXIT_FAILURE);
+    }
+    stack_node_t *old_node = s->node;
+    s->node = old_node->next;
+    memcpy(value, old_node->value, s->elem_size);
+    free(old_node->value);
+    free(old_node);
 }
 
-void *top_from_stack(stack_str_t *s)
-{
-  if (stack_is_empty(s))
-  {
-    fprintf(stderr, "Can not pop from an empty stack.\n");
-    exit(1);
-  }
-  int start = (s->top - 1) * s->elemSize, i;
-  byte *elem;
-  elem = (byte *)malloc(s->elemSize);
-  for (i = 0; i < s->elemSize; i++)
-  {
-    *(elem + i) = *(s->storage + start + i);
-  }
-  return (void *)elem;
+/**
+ * @brief Get top element from stack
+ * 
+ */
+void top_from_stack(stack_structure_t *s, void *value) {
+    if (stack_is_empty(s)) {
+        fprintf(stderr, "Stack is empty.\n");
+        exit(EXIT_FAILURE);
+    }
+    memcpy(value, s->node->value, s->elem_size);
 }
 
-void free_stack(stack_str_t *s)
-{
-  free(s->storage);
-  s->top = 0;
+/**
+ * @brief Destroy stack
+ * 
+ */
+void destroy_stack(stack_structure_t *s) {
+    while (!stack_is_empty(s)) {
+        pop_from_stack(s, NULL);
+    }
+    free(s->node);
+    s->node = NULL;
 }

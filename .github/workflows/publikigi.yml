@@ -31,19 +31,11 @@ jobs:
         run: choco install --verbose mingw make winflexbison3
         if: startsWith(matrix.os, 'windows')
 
-      - name: Instali graphviz
-        run: choco install --verbose graphviz
-        if: startsWith(matrix.os, 'windows')
-
-      - name: Instali graphviz
-        run: apt install -y graphviz
-        if: startsWith(matrix.os, 'windows')
-
-      - name: Instali graphviz
-        run: port install -N graphviz
-        if: startsWith(matrix.os, 'macos')
-
       - uses: actions/checkout@v2
+
+      - name: Setup Graphviz
+        uses: ts-graphviz/setup-graphviz@v1
+
       - name: Konstrui
         run: make ${{ matrix.app }}.app
 
