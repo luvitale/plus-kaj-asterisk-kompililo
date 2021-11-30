@@ -99,7 +99,7 @@ void show_rpn(rpn_t *rpn)
 void rpn_assembly(rpn_t *rpn, char *filename)
 {
   stack_structure_t l_stack;
-  create_stack(&l_stack, 100);
+  create_stack(&l_stack, sizeof(char) * 100);
 
   printf("RPN assembly\n");
 
