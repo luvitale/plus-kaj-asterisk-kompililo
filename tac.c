@@ -12,7 +12,7 @@ char file[100];
 void add_tac_to_file(tac_t *tac)
 {
   FILE *fp = fopen(file, "a");
-  if (file == NULL)
+  if (!fp)
   {
     printf("Error opening file %s\n", file);
     exit(1);
